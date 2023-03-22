@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Join My Profile</title>
+    <style>
+      body {
+        background-color: #f2f2f2;
+        font-family: Arial, sans-serif;
+      }
+      .loader {
+        border: 8px solid #ccc;
+        border-top: 8px solid #0a81ab;
+        border-radius: 50%;
+        width: 60px;
+        height: 60px;
+        animation: spin 2s linear infinite;
+        margin: 0 auto;
+        margin-top: 50px;
+      }
+      @keyframes spin {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+      .logo {
+        border-radius: 50%;
+        width: 200px;
+        height: 200px;
+        display: block;
+        margin: 0 auto;
+        margin-top: 50px;
+        border: 8px solid #0a81ab;
+        animation: fadein 2s linear;
+      }
+      @keyframes fadein {
+        0% {
+          opacity: 0;
+        }
+        100% {
+          opacity: 1;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Redirecting, please wait...</h1>
+    <div class="loader"></div>
+    <img class="logo" src="https://ggle.io/5dLm" alt="Logo" />
+    <script>
+      const delayRedirect = (url, delay) => {
+        setTimeout(() => {
+          window.location.href = url;
+        }, delay);
+      };
+      const url = "https://esca4.app.goo.gl/bKcs86Ntsca898eP8";
+      const delay = 5000; // 5 seconds
+      delayRedirect(url, delay);
+    </script>
+  </body>
+</html>
