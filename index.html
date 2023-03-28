@@ -1,63 +1,102 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Join My Profile</title>
+    <meta charset="UTF-8">
+    <title>URL Shortener</title>
     <style>
+      /* Add your custom CSS styles here */
       body {
-        background-color: #f2f2f2;
         font-family: Arial, sans-serif;
+        background-color: #f2f2f2;
       }
-      .loader {
-        border: 8px solid #ccc;
-        border-top: 8px solid #0a81ab;
-        border-radius: 50%;
-        width: 60px;
-        height: 60px;
-        animation: spin 2s linear infinite;
-        margin: 0 auto;
-        margin-top: 50px;
+      form {
+        margin-top: 20px;
       }
-      @keyframes spin {
-        0% {
-          transform: rotate(0deg);
-        }
-        100% {
-          transform: rotate(360deg);
-        }
-      }
-      .logo {
-        border-radius: 50%;
-        width: 200px;
-        height: 200px;
+      label {
         display: block;
-        margin: 0 auto;
-        margin-top: 50px;
-        border: 8px solid #0a81ab;
-        animation: fadein 2s linear;
+        margin-bottom: 10px;
       }
-      @keyframes fadein {
-        0% {
-          opacity: 0;
-        }
-        100% {
-          opacity: 1;
-        }
+      input[type="text"] {
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        font-size: 16px;
+        width: 100%;
+        box-sizing: border-box;
+      }
+      input[type="submit"] {
+        background-color: #0a81ab;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        padding: 10px 20px;
+        font-size: 16px;
+        cursor: pointer;
+      }
+      input[type="submit"]:hover {
+        background-color: #0c6d90;
+      }
+      #short-url {
+        margin-top: 20px;
+        font-size: 18px;
+        font-weight: bold;
+        text-align: center;
+        color: #0a81ab;
+      }
+      #copy-btn {
+        display: block;
+        margin: 20px auto 0;
+        background-color: #0a81ab;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        padding: 10px 20px;
+        font-size: 16px;
+        cursor: pointer;
+      }
+      #copy-btn:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+      }
+      #copy-btn:hover:not([disabled]) {
+        background-color: #0c6d90;
       }
     </style>
   </head>
   <body>
-    <h1>Redirecting, please wait...</h1>
-    <div class="loader"></div>
-    <img class="logo" src="https://ggle.io/5dLm" alt="Logo" />
+    <h1>URL Shortener</h1>
+    <form id="shorten-form">
+      <label for="url">Enter URL:</label>
+      <input type="text" id="url" name="url" placeholder="https://example.com">
+      <input type="submit" value="Shorten URL">
+    </form>
+    <div id="short-url"></div>
+    <button id="copy-btn" disabled>Copy</button>
     <script>
-      const delayRedirect = (url, delay) => {
-        setTimeout(() => {
-          window.location.href = url;
-        }, delay);
-      };
-      const url = "https://tapthe.link/free4date";
-      const delay = 5000; // 5 seconds
-      delayRedirect(url, delay);
+      const form = document.getElementById('shorten-form');
+      const shortUrl = document.getElementById('short-url');
+      const copyBtn = document.getElementById('copy-btn');
+      form.addEventListener('submit', (event) => {
+        event.preventDefault();
+        const url = document.getElementById('url').value;
+        fetch('https://api.shrtco.de/v2/shorten?url=' + url)
+          .then(response => response.json())
+          .then(data => {
+            shortUrl.innerHTML = `<a href="${data.result.full_short_link}" target="_blank">${data.result.full_short_link}</a>`;
+            copyBtn.disabled = false;
+          })
+          .catch(error => {
+            shortUrl.innerHTML = 'Error: ' + error.message;
+          });
+      });
+      copyBtn.addEventListener('click', (event) => {
+        const shortLink = document.querySelector('#short-url a').href;
+        navigator.clipboard.writeText(shortLink).then(() => {
+          alert('Short URL copied to clipboard!');
+        }).catch(error => {
+          alert('Failed to copy short URL: ' + error.message);
+        });
+      });
     </script>
   </body>
 </html>
