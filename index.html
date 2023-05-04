@@ -2,7 +2,11 @@
 <html>
   <head>
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>URL Shortener</title>
+    <meta property="og:title" content="My Website">
+    <meta property="og:image" content="https://ggle.io/slogo">
     <style>
       /* Add your custom CSS styles here */
       body {
@@ -13,39 +17,57 @@
   transition: background-image 0.5s ease-in-out;
 }
 
-      form {
-        margin-top: 20px;
-      }
-      label {
-        display: block;
-        margin-bottom: 10px;
-      }
-      input[type="text"] {
-        padding: 10px;
-        border: 1px solid #ccc;
-        border-radius: 5px;
-        font-size: 16px;
-        width: 100%;
-        box-sizing: border-box;
-      }
-      input[type="submit"] {
-        background-color: #0a81ab;
-        color: #fff;
+      h1 {
+      color: #bcff05; /* set the title color */
+      text-align: center;
+      margin-top: 50px;
+      font-size: 70px;
+    }
+    label {
+      color: #00f7ff; /* set the title color */
+      text-align: center;
+      margin-top: 50px;
+      font-size: 30px;
+    }
+          label {
+            display: block;
+            margin-bottom: 10px;
+          }
+          input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            border: 2px solid #2702f7;
+            border-radius: 10px;
+            box-sizing: border-box;
+            margin-bottom: 20px;
+            
+          }
+          input[type="submit"] {
+            background-color: #1db122;
+            color: rgb(0, 9, 58);
+            padding: 10px 100px;
+            font-size: 30px;
+            font-style: initial;
+            border: none 10px;
+            border-radius: 20px;
+            cursor: pointer;
+            
+           
+          }
+          input[type="submit"]:hover {
+            background-color: #00ca0a;
+          }
+          button {
+        background-color: blue;
+        color: white;
+        padding: 10px 20px;
         border: none;
         border-radius: 5px;
-        padding: 10px 20px;
-        font-size: 16px;
         cursor: pointer;
       }
-      input[type="submit"]:hover {
-        background-color: #0c6d90;
-      }
-      #short-url {
-        margin-top: 20px;
-        font-size: 18px;
-        font-weight: bold;
-        text-align: center;
-        color: #0a81ab;
+      button:hover {
+        background-color: darkblue;
       }
       #copy-btn {
         display: block;
