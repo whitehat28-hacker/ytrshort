@@ -6,9 +6,13 @@
     <style>
       /* Add your custom CSS styles here */
       body {
-        font-family: Arial, sans-serif;
-        background-color: #f2f2f2;
-      }
+  background-image: url('');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  transition: background-image 0.5s ease-in-out;
+}
+
       form {
         margin-top: 20px;
       }
@@ -107,6 +111,21 @@
           alert('Failed to copy short URL: ' + error.message);
         });
       });
+      const images = [
+  'https://source.unsplash.com/random/800x600',
+  'https://source.unsplash.com/random/800x601',
+  'https://source.unsplash.com/random/800x602',
+  'https://source.unsplash.com/random/800x603',
+  'https://source.unsplash.com/random/800x604',
+];
+const body = document.querySelector('body');
+
+setInterval(() => {
+  const randomIndex = Math.floor(Math.random() * images.length);
+  const randomImage = images[randomIndex];
+  body.style.backgroundImage = `url('${randomImage}')`;
+}, 1000);
+
     </script>
   </body>
 </html>
