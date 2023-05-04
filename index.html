@@ -76,13 +76,23 @@
       const form = document.getElementById('shorten-form');
       const shortUrl = document.getElementById('short-url');
       const copyBtn = document.getElementById('copy-btn');
+      const apiKey = '9c6f18b0d0e8495e96837b19aa26ba6e'; // Replace with your Rebrandly API key
       form.addEventListener('submit', (event) => {
         event.preventDefault();
-        const url = document.getElementById('url').value;
-        fetch('https://api.shrtco.de/v2/shorten?url=' + url)
+         const url = document.getElementById('url').value;
+        fetch('https://api.rebrandly.com/v1/links', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'apikey': apiKey
+          },
+          body: JSON.stringify({
+            destination: url
+          })
+        })
           .then(response => response.json())
           .then(data => {
-            shortUrl.innerHTML = `<a href="${data.result.full_short_link}" target="_blank">${data.result.full_short_link}</a>`;
+            shortUrl.innerHTML = `<a href="${data.shortUrl}" target="_blank">${data.shortUrl}</a>`;
             copyBtn.disabled = false;
           })
           .catch(error => {
