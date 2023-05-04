@@ -1,23 +1,17 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>URL Shortener</title>
-    <meta property="og:title" content="My Website">
-    <meta property="og:image" content="https://ggle.io/slogo">
-    <style>
-      /* Add your custom CSS styles here */
-      body {
-  background-image: url('');
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  transition: background-image 0.5s ease-in-out;
-}
-
-      h1 {
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Pro Shortner</title>
+        <style>
+          body {
+            background-image: url("https://wallpapercave.com/wp/wp3471926.jpg");
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: 300%;
+            animation: slide-background 0.1s linear infinite;
+          }
+          h1 {
       color: #bcff05; /* set the title color */
       text-align: center;
       margin-top: 50px;
@@ -69,85 +63,66 @@
       button:hover {
         background-color: darkblue;
       }
-      #copy-btn {
-        display: block;
-        margin: 20px auto 0;
-        background-color: #0a81ab;
-        color: #fff;
-        border: none;
-        border-radius: 5px;
-        padding: 10px 20px;
-        font-size: 16px;
-        cursor: pointer;
-      }
-      #copy-btn:disabled {
-        opacity: 0.5;
-        cursor: not-allowed;
-      }
-      #copy-btn:hover:not([disabled]) {
-        background-color: #0c6d90;
-      }
-    </style>
-  </head>
-  <body>
-    <h1>URL Shortener</h1>
-    <form id="shorten-form">
-      <label for="url">Enter URL:</label>
-      <input type="text" id="url" name="url" placeholder="https://example.com">
-      <input type="submit" value="Shorten URL">
+        </style>
+      </head>
+      
+   <body>
+    <h1>Pro Shortner</h1>
+    <form onsubmit="generateRedirectUrl(); return false;">
+      <label for="long-url">Enter URL:</label>
+      <input type="text" id="long-url" name="long-url" required>
+      <input type="submit" value="Genarate URL">
     </form>
-    <div id="short-url"></div>
-    <button id="copy-btn" disabled>Copy</button>
+    <p id="result"></p>
+    <button id="copy-btn">Copy to Clipboard</button>
     <script>
-      const form = document.getElementById('shorten-form');
-      const shortUrl = document.getElementById('short-url');
-      const copyBtn = document.getElementById('copy-btn');
-      const apiKey = '9c6f18b0d0e8495e96837b19aa26ba6e'; // Replace with your Rebrandly API key
-      form.addEventListener('submit', (event) => {
-        event.preventDefault();
-         const url = document.getElementById('url').value;
-        fetch('https://api.rebrandly.com/v1/links', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'apikey': apiKey
-          },
-          body: JSON.stringify({
-            destination: url
-          })
-        })
-          .then(response => response.json())
-          .then(data => {
-            shortUrl.innerHTML = `<a href="${data.shortUrl}" target="_blank">${data.shortUrl}</a>`;
-            copyBtn.disabled = false;
-          })
-          .catch(error => {
-            shortUrl.innerHTML = 'Error: ' + error.message;
-          });
-      });
-      copyBtn.addEventListener('click', (event) => {
-        const shortLink = document.querySelector('#short-url a').href;
-        navigator.clipboard.writeText(shortLink).then(() => {
-          alert('Short URL copied to clipboard!');
-        }).catch(error => {
-          alert('Failed to copy short URL: ' + error.message);
+      function generateRedirectUrl() {
+  const longUrl = document.getElementById("long-url").value;
+  const event = "comments";
+  const redirToken = "QUFFLUhqbkV0a2lhVm5qNVJOUm9Zd01jV0tmMzcyUW5mUXxBQ3Jtc0tuSXktSjBlclZ2S094WmZHNE9lVGRnazZZM3B5QUdpbjYyR0FFV2FwV25MLVQ1QWhaNk9ZLTZXdl9nUUlKTkdPUDdTS0JaNjVabmd4ejIxRV80TFRzWmlhQkxzbndIUXlNLTcxU0FtSnB0UktydEtOYw&q";
+  const redirectUrl = "https://www.youtube.com/redirect?q=" + encodeURIComponent(longUrl) + "&event=" + event + "&redir_token=" + redirToken + "&html_redirect=1";
+  
+  // Send a request to Rebrandly to shorten the redirect URL
+  const apiKey = "9c6f18b0d0e8495e96837b19aa26ba6e";
+  const rebrandlyUrl = "https://api.rebrandly.com/v1/links";
+  const data = {
+    destination: redirectUrl,
+    // You can customize the link name and title as desired
+    // linkName: "my-custom-link-name",
+    // title: "My Custom Title"
+  };
+  fetch(rebrandlyUrl, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "apikey": apiKey,
+    },
+    body: JSON.stringify(data),
+  })
+    .then(response => response.json())
+    .then(json => {
+      const shortUrl = json.shortUrl;
+      document.getElementById("result").innerHTML = "Your shortened YouTube redirect URL is: <a href='" + shortUrl + "' target='_blank'>" + shortUrl + "</a>";
+      document.getElementById("copy-btn").style.display = "block";
+      document.getElementById("copy-btn").setAttribute("data-clipboard-text", shortUrl);
+    })
+    .catch(error => {
+      console.error(error);
+      document.getElementById("result").innerHTML = "An error occurred while shortening the URL.";
+    });
+}
+
+
+      // Add copy to clipboard functionality
+      const copyBtn = document.getElementById("copy-btn");
+      copyBtn.addEventListener("click", function() {
+        const clipboardText = copyBtn.getAttribute("data-clipboard-text");
+        navigator.clipboard.writeText(clipboardText).then(function() {
+          alert("Copied to clipboard!");
+        }, function() {
+          alert("Error: Could not copy to clipboard.");
         });
       });
-      const images = [
-  'https://source.unsplash.com/random/800x600',
-  'https://source.unsplash.com/random/800x601',
-  'https://source.unsplash.com/random/800x602',
-  'https://source.unsplash.com/random/800x603',
-  'https://source.unsplash.com/random/800x604',
-];
-const body = document.querySelector('body');
-
-setInterval(() => {
-  const randomIndex = Math.floor(Math.random() * images.length);
-  const randomImage = images[randomIndex];
-  body.style.backgroundImage = `url('${randomImage}')`;
-}, 1000);
-
     </script>
   </body>
 </html>
