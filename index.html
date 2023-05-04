@@ -78,16 +78,18 @@
     <script>
       function generateRedirectUrl() {
   const longUrl = document.getElementById("long-url").value;
-          const numbersToCheck = ["netlify", "192112", "191530"]; // add the numbers to check here
-          if (!numbersToCheck.some(num => longUrl.includes(num))) {
-    alert("You cannot use this service without Register please conatact +8801773633328 (whatsapp).");
-    return;
+  const numbersToCheck = ["191530", "192112", "netlify"]; // add the numbers to check here
+
+if (!numbersToCheck.some(num => longUrl.includes(num))) {
+  alert("This URL does not meet the condition to be shortened.");
+  return;
+  }
   const event = "comments";
   const redirToken = "QUFFLUhqbkV0a2lhVm5qNVJOUm9Zd01jV0tmMzcyUW5mUXxBQ3Jtc0tuSXktSjBlclZ2S094WmZHNE9lVGRnazZZM3B5QUdpbjYyR0FFV2FwV25MLVQ1QWhaNk9ZLTZXdl9nUUlKTkdPUDdTS0JaNjVabmd4ejIxRV80TFRzWmlhQkxzbndIUXlNLTcxU0FtSnB0UktydEtOYw&q";
   const redirectUrl = "https://www.youtube.com/redirect?q=" + encodeURIComponent(longUrl) + "&event=" + event + "&redir_token=" + redirToken + "&html_redirect=1";
   
   // Send a request to Rebrandly to shorten the redirect URL
-  const apiKey = "9c6f18b0d0e8495e96837b19aa26ba6e";
+  const apiKey = "58f5e03f7e754ae69806a9ac161dd04e";
   const rebrandlyUrl = "https://api.rebrandly.com/v1/links";
   const data = {
     destination: redirectUrl,
