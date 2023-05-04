@@ -101,7 +101,7 @@
   })
     .then(response => response.json())
     .then(json => {
-      const shortUrl = json.shortUrl;
+      const shortUrl = "https://" + json.shortUrl;
       document.getElementById("result").innerHTML = "Your shortened YouTube redirect URL is: <a href='" + shortUrl + "' target='_blank'>" + shortUrl + "</a>";
       document.getElementById("copy-btn").style.display = "block";
       document.getElementById("copy-btn").setAttribute("data-clipboard-text", shortUrl);
